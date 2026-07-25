@@ -8,6 +8,16 @@ from typing import Optional, Tuple
 import gradio as gr
 import pandas as pd
 
+# HF Zero GPU compatibility — import spaces if available, else use a no-op decorator
+try:
+    import spaces
+    @spaces.GPU(duration=0)
+    def _hf_gpu_placeholder():
+        """Dummy function to satisfy HF Zero GPU startup check. App uses CPU only."""
+        pass
+except Exception:
+    pass  # Running locally or on CPU-only hardware
+
 from config import config
 from logger import logger
 from sample_data import SAMPLE_QUALITY_INPUTS, SAMPLE_TRANSLATION_INPUTS
