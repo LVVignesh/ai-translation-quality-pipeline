@@ -1,3 +1,15 @@
+---
+title: AI Translation Quality Pipeline
+emoji: 🤖
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: "5.38.2"
+python_version: "3.11"
+app_file: app.py
+pinned: false
+---
+
 # AI-Assisted Translation & Quality Scoring Pipeline
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
