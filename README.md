@@ -33,6 +33,14 @@ An enterprise-grade AI software localization and translation quality evaluation 
 
 ---
 
+## 📸 Application Preview
+
+| Translation Pipeline | Quality Scoring Audit |
+|:---:|:---:|
+| ![Translation Tab — Context-aware English-to-Spanish UI string localization with confidence ratings](translation.png) | ![Quality Scoring Tab — 100-point rubric audit with severity ratings and suggested corrections](quality.png) |
+
+---
+
 ## 📌 Project Overview
 
 Software localization requires more than literal dictionary translations. English software UI strings frequently contain polysemous single words — such as **"Open"**, **"Post"**, or **"Due"** — whose correct translation changes dramatically depending on user context and developer intent.
