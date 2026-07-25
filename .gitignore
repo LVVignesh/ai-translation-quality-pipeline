@@ -1,0 +1,20 @@
+# Environment variables & secrets
+.env
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python byte-code & cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary export files generated during testing
+voxiis_*.csv
+voxiis_*.json
+
+# OS specific files
+.DS_Store
+Thumbs.db
