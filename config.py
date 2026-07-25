@@ -1,4 +1,4 @@
-"""Configuration management for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Configuration management for the AI Translation & Quality Scoring Pipeline.
 
 Loads settings from environment variables or .env file cleanly and robustly.
 """

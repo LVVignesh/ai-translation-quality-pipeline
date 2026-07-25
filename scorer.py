@@ -1,4 +1,4 @@
-"""Translation quality scoring service for Voxiis.
+"""Translation quality scoring service for the AI Translation & Quality Scoring Pipeline.
 
 Evaluates candidates against the 100-point rubric (Contextual Accuracy, Linguistic Quality,
 UI Appropriateness, Consistency), returning explainable evaluations and summary statistics.

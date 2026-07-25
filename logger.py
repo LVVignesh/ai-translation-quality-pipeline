@@ -1,4 +1,4 @@
-"""Logging configuration for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Logging configuration for the AI Translation & Quality Scoring Pipeline.
 
 Provides structured, readable console logging for operational transparency.
 """
@@ -8,7 +8,7 @@ import sys
 from config import config
 
 
-def setup_logger(name: str = "voxiis") -> logging.Logger:
+def setup_logger(name: str = "ai_pipeline") -> logging.Logger:
     """Configures and returns a logger instance with standardized formatting.
 
     Args:

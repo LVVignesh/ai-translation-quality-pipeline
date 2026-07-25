@@ -1,4 +1,4 @@
-"""Dedicated Anthropic Claude API client wrapper for Voxiis.
+"""Dedicated Anthropic Claude API client wrapper for the AI Translation & Quality Scoring Pipeline.
 
 Centralizes all Claude API invocations, environment/model resolution, retry logic with
 exponential backoff, robust JSON extraction/parsing, timeout handling, and exception management.

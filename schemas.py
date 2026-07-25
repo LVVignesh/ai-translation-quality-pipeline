@@ -1,4 +1,4 @@
-"""Pydantic data models for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Pydantic data models for the AI Translation & Quality Scoring Pipeline.
 
 Defines strict type hints, validation rules, and schema contracts.
 """

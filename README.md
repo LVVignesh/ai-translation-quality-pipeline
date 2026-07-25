@@ -1,6 +1,6 @@
 ---
 title: AI Translation Quality Pipeline
-emoji: 🤖
+emoji: 🌐
 colorFrom: blue
 colorTo: indigo
 sdk: gradio
@@ -10,76 +10,90 @@ app_file: app.py
 pinned: false
 ---
 
-# AI-Assisted Translation & Quality Scoring Pipeline
+# 🌐 AI-Assisted Translation & Quality Scoring Pipeline
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Anthropic Claude API](https://img.shields.io/badge/Anthropic-Claude%20API-orange.svg)](https://docs.anthropic.com/)
-[![Gradio UI](https://img.shields.io/badge/UI-Gradio-red.svg)](https://gradio.app/)
-[![Deployment Target](https://img.shields.io/badge/Hugging%20Face-Spaces-yellow.svg)](https://huggingface.co/spaces)
+[![Anthropic Claude](https://img.shields.io/badge/Anthropic-Claude%20API-orange.svg)](https://docs.anthropic.com/)
+[![Gradio](https://img.shields.io/badge/UI-Gradio%205-red.svg)](https://gradio.app/)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow)](https://huggingface.co/spaces/lvvignesh2122/ai-translation-quality-pipeline)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-An enterprise-grade AI software localization and quality evaluation application. This project demonstrates how Large Language Models (LLMs) perform context-aware software internationalization (i18n) and objective translation quality auditing.
+An enterprise-grade AI software localization and translation quality evaluation system. This project demonstrates how Large Language Models perform context-aware software internationalization (i18n) and objective, explainable translation quality auditing through a clean reviewer-friendly Gradio interface.
 
-> *Note: This project was originally developed as part of an AI Engineer technical assessment.*
-
----
-
-## 📌 Project Overview
-
-Software localization requires more than literal dictionary translations. English software UI strings frequently contain polysemous single words—such as **"Open"**, **"Post"**, or **"Due"**—whose correct translation changes dramatically depending on user context and developer intent.
-
-This project solves software localization challenges through two independent, production-grade pipelines:
-
-1. **Context-Aware Software Localization**: Translates ambiguous English UI strings into Spanish by analyzing string key hierarchy and developer comments alongside the source text.
-2. **Translation Quality Scoring Audit**: Evaluates candidate translations using an explainable, 100-point scoring rubric, producing itemized issue reports, severity ratings, and suggested corrections.
-3. **Interactive Reviewer Interface**: Features a clean Gradio dashboard allowing engineering teams to run pipelines independently or end-to-end, with exportable CSV and JSON reports.
+> *This project was developed as an AI Engineer technical assessment demonstrating production engineering practices.*
 
 ---
 
 ## 🚀 Live Demo
 
-**Hugging Face Spaces**:  
-*(Add deployed URL after deployment)*
+**▶️ Try it on Hugging Face Spaces:**  
+👉 [https://huggingface.co/spaces/lvvignesh2122/ai-translation-quality-pipeline](https://huggingface.co/spaces/lvvignesh2122/ai-translation-quality-pipeline)
+
+> Bring your own Anthropic API key — enter it directly in the UI input field (it is never stored).
+
+---
+
+## 📌 Project Overview
+
+Software localization requires more than literal dictionary translations. English software UI strings frequently contain polysemous single words — such as **"Open"**, **"Post"**, or **"Due"** — whose correct translation changes dramatically depending on user context and developer intent.
+
+This project solves software localization challenges through two independent, production-grade pipelines:
+
+1. **Context-Aware Software Localization** — Translates ambiguous English UI strings into Spanish by analyzing string key hierarchy and developer comments alongside the source text.
+2. **Translation Quality Scoring Audit** — Evaluates candidate translations using an explainable 100-point scoring rubric, producing itemized issue reports, severity ratings, and suggested corrections.
+3. **Interactive Reviewer Interface** — Features a clean Gradio dashboard allowing engineering teams to run pipelines independently or end-to-end, with exportable CSV and JSON reports.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **LLM Engine**: Anthropic Claude API (`claude-sonnet-4-6`)
-- **User Interface**: Gradio 4+
-- **Core Runtime**: Python 3.11+
-- **Data Validation & Schemas**: Pydantic v2
-- **Data Manipulation & Formatting**: Pandas
-- **Environment Management**: python-dotenv
+| Layer | Technology |
+|---|---|
+| **LLM Engine** | Anthropic Claude API (`claude-sonnet-4-6`) |
+| **User Interface** | Gradio 5 (Soft theme) |
+| **Core Runtime** | Python 3.11+ |
+| **Data Validation** | Pydantic v2 |
+| **Data & Exports** | Pandas, JSON, CSV |
+| **Environment** | python-dotenv |
+| **Deployment** | Hugging Face Spaces (Zero GPU / CPU) |
 
 ---
 
-## 🏗️ Architecture Diagram
+## 🏗️ Architecture
 
 ```
                  ┌──────────────────────────────────────┐
                  │         Gradio User Interface        │
-                 │     (app.py - Default Theme)         │
+                 │              (app.py)                │
                  └──────────────────┬───────────────────┘
-                                    │
+                                    │ orchestrates only
                ┌────────────────────┴───────────────────┐
                ▼                                        ▼
      ┌───────────────────┐                    ┌───────────────────┐
      │   translator.py   │                    │     scorer.py     │
-     │ (Translation)     │                    │ (Quality Audit)   │
+     │ Context-Aware     │                    │ 100-Point Quality │
+     │ Localization      │                    │ Scoring Audit     │
      └─────────┬─────────┘                    └─────────┬─────────┘
                │                                        │
                └────────────────────┬───────────────────┘
                                     ▼
                         ┌───────────────────────┐
                         │    claude_client.py   │
-                        │(Anthropic API Client) │
+                        │  Retry · Backoff      │
+                        │  JSON parsing         │
                         └───────────┬───────────┘
                                     ▼
                         ┌───────────────────────┐
-                        │ Anthropic Claude API  │
+                        │  Anthropic Claude API │
                         │  (claude-sonnet-4-6)  │
                         └───────────────────────┘
 ```
+
+**Design Principles:**
+- `app.py` contains **zero business logic** — orchestration only
+- `translator.py` and `scorer.py` **never call the API directly**
+- All LLM interactions are routed through `claude_client.py`
+- All data contracts enforced by `schemas.py` Pydantic models
 
 ---
 
@@ -87,123 +101,92 @@ This project solves software localization challenges through two independent, pr
 
 ```
 ai-translation-quality-pipeline/
-├── app.py              # Gradio web application & orchestration layer
-├── claude_client.py    # Dedicated Anthropic Claude API client (retries, timeouts, JSON parsing)
+├── app.py              # Gradio UI & orchestration layer
+├── claude_client.py    # Anthropic Claude API client (retries, timeouts, JSON parsing)
 ├── translator.py       # Context-aware translation service
-├── scorer.py           # 100-point rubric quality scoring service & metrics aggregator
-├── prompts.py          # Structured system & user prompts for translation and evaluation
+├── scorer.py           # 100-point rubric quality scoring & metrics aggregator
+├── prompts.py          # Structured system & user prompts
 ├── schemas.py          # Strict Pydantic models for data validation
-├── sample_data.py      # Benchmark datasets (10 translation inputs & 8 evaluation candidates)
+├── sample_data.py      # Benchmark datasets (10 translation + 8 evaluation pairs)
 ├── config.py           # Configuration management (.env & environment resolution)
 ├── logger.py           # Standardized application logging
-├── utils.py            # DataFrame conversion & CSV/JSON export handlers
-├── requirements.txt    # Pinned dependency manifest
-├── README.md           # Documentation & architectural blueprint
-└── .env.example        # Environment configuration template
+├── utils.py            # DataFrame conversion & CSV/JSON export helpers
+├── requirements.txt    # Dependency manifest
+├── .env.example        # Environment configuration template
+└── README.md           # This file
 ```
 
 ---
 
-## 🎯 Design Decisions
+## 💡 Context-Aware Translation Strategy
 
-- **Why Gradio**: Enables rapid, Python-native UI deployment perfectly tailored for Hugging Face Spaces without complex web framework overhead.
-- **Why Pydantic**: Guarantees strict runtime data validation, strong typing, and schema contracts for all LLM JSON payloads.
-- **Why a Dedicated Claude Client**: Decouples API connectivity, retries, rate-limit backoff, and raw JSON parsing from business services (`translator.py` / `scorer.py`), upholding SOLID principles.
-- **Why Deterministic Temperature (0.0)**: Eliminates creative variance and hallucinations, ensuring reproducible localization choices and consistent 100-point rubric audits.
-- **Why Retry Logic**: Automatically recovers from transient network timeouts and API rate limits via exponential backoff without user-facing crashes.
-- **Why Business Logic is Separated from UI**: Keeps `app.py` strictly focused on UI orchestration, making core services independently testable and maintainable.
-
----
-
-## 💡 Context-Aware Translation Strategy & Polysemy Analysis
-
-### How Claude Translates UI Strings
+### How Claude Resolves Polysemy
 Every localization request provides Claude with three contextual signals:
-1. **UI Key Syntax** (e.g., `ticket.button.open` vs `settings.hours.status_label_open`)
-2. **Developer Commentary** (e.g., *"Button an agent clicks to open a closed support ticket back up"*)
-3. **English Source Text** (e.g., *"Open"*)
+
+1. **UI Key Syntax** — e.g., `ticket.button.open` vs `settings.hours.status_label_open`
+2. **Developer Commentary** — e.g., *"Button an agent clicks to open a closed support ticket back up"*
+3. **English Source Text** — e.g., *"Open"*
 
 Claude combines these signals to infer whether a string represents an action verb, a status adjective, or a specific domain concept before selecting the correct Spanish term.
 
-### Polysemy Benchmark Comparison
+### Polysemy Benchmark
 
-| English Word | UI Key Syntax | Developer Context | Naive Translation | Context-Aware Translation | Context Reasoning |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Open** | `ticket.button.open` | Agent clicks to open closed support ticket | *Abierto* (Adjective) | **Reabrir** | Reopening action verb for support ticket workflow |
-| **Open** | `settings.hours.status_label_open` | Support desk is open for business | *Abrir* (Verb) | **Abierto** | State/Adjective indicating operational status |
-| **Post** | `feed.button.post` | Publish new post to internal feed | *Correo* (Mail) | **Publicar** | Social/Feed publishing action verb |
-| **Post** | `mail.label.post` | Physical mail correspondence field | *Publicar* (Social) | **Dirección Postal** | Postal mailing address context |
-| **Due** | `ticket.field.due` | Field showing ticket due date | *Vencido* (Expired) | **Fecha de vencimiento** | Resolution deadline context |
-| **Due** | `invoice.field.amount_due` | Field showing amount of money owed | *Vencimiento* (Date) | **Importe pendiente** | Financial balance owed context |
+| English | UI Key | Context | Naïve Translation | Context-Aware Translation |
+|:---|:---|:---|:---|:---|
+| **Open** | `ticket.button.open` | Reopen a closed ticket | *Abierto* ❌ | **Reabrir** ✅ |
+| **Open** | `settings.hours.status_label_open` | Desk is open for business | *Abrir* ❌ | **Abierto** ✅ |
+| **Post** | `feed.button.post` | Publish to internal feed | *Correo* ❌ | **Publicar** ✅ |
+| **Post** | `mail.label.post` | Physical mail field | *Publicar* ❌ | **Dirección Postal** ✅ |
+| **Due** | `ticket.field.due` | Ticket due date | *Vencido* ❌ | **Fecha de vencimiento** ✅ |
+| **Due** | `invoice.field.amount_due` | Amount of money owed | *Vencimiento* ❌ | **Importe pendiente** ✅ |
 
 ---
 
-## 📊 Quality Scoring Rubric Framework (100 Points)
+## 📊 Quality Scoring Rubric (100 Points)
 
-Candidate translations are evaluated against an explainable 100-point rubric:
+| Dimension | Weight | Evaluates |
+|:---|:---|:---|
+| **Contextual Accuracy** | 40 pts | Correct semantic interpretation of key + developer intent |
+| **Linguistic Quality** | 30 pts | Spanish grammar, spelling, natural phrasing, fluency |
+| **UI Appropriateness** | 20 pts | Conciseness suitable for UI components |
+| **Consistency** | 10 pts | Alignment with standard software terminology |
 
-- **Contextual Accuracy (0–40 Points)**: Correct semantic interpretation of key hierarchy and developer intent.
-- **Linguistic Quality (0–30 Points)**: Spanish grammar, spelling, natural phrasing, and fluency.
-- **UI Appropriateness (0–20 Points)**: Character length conciseness suitable for UI components.
-- **Consistency (0–10 Points)**: Alignment with standard software terminology conventions.
-
-### Approval Threshold
-- **Score ≥ 70.0** ➔ Status: **`Passed`**
-- **Score < 70.0** ➔ Status: **`Needs Review`**
+**Approval threshold:**  
+- Score **≥ 70** → ✅ `Passed`  
+- Score **< 70** → ⚠️ `Needs Review`
 
 ---
 
 ## 🔍 Notable Quality Scoring Findings
 
-During benchmark evaluation of candidate translation pairs, the quality scoring engine correctly identifies semantic errors that naive translators miss:
-
-1. **`ticket.button.open` (Candidate: *Abierto*)**
-   - **Score**: ~42/100 | **Status**: `Needs Review` | **Severity**: `Critical`
-   - **Audit Issue**: *Abierto* is an adjective. A ticket reopen button requires an action verb (*Reabrir*).
-2. **`feed.button.post` (Candidate: *Correo*)**
-   - **Score**: ~35/100 | **Status**: `Needs Review` | **Severity**: `Critical`
-   - **Audit Issue**: *Correo* refers to postal mail. Publishing to an internal team feed requires *Publicar*.
-3. **`invoice.field.amount_due` (Candidate: *Vencido*)**
-   - **Score**: ~48/100 | **Status**: `Needs Review` | **Severity**: `Critical`
-   - **Audit Issue**: *Vencido* means expired/past due. The amount owed on an invoice requires *Importe pendiente* or *Monto a pagar*.
-4. **Passing Benchmarks**:
-   - Accurate candidates (*Cerrar*, *Asignar*, *Compartir*, *Exportar*) consistently score **85–100** points with status **`Passed`**.
-
----
-
-## 📝 Key Assumptions
-
-- **Target Locale**: Standard Spanish (Castilian/International software Spanish).
-- **UI Component Type**: Compact software UI components (buttons, labels, input headers).
-- **Passing Threshold**: 70 out of 100 total rubric points required for automatic approval.
-- **Contextual Priority**: Key names and developer notes take precedence over literal dictionary lookup.
-
----
-
-## 🖼️ Screenshots
-
-### Translation Pipeline
-*(Insert screenshot after deployment)*
-
-### Quality Scoring
-*(Insert screenshot after deployment)*
+| Candidate | Score | Status | Issue |
+|:---|:---|:---|:---|
+| `ticket.button.open` → *Abierto* | ~42/100 | ⚠️ Needs Review | Adjective used where action verb (*Reabrir*) required |
+| `feed.button.post` → *Correo* | ~35/100 | ⚠️ Needs Review | Postal mail term used for social feed publishing |
+| `invoice.field.amount_due` → *Vencido* | ~48/100 | ⚠️ Needs Review | "Expired" used instead of "Amount owed" |
+| `modal.button.close` → *Cerrar* | ~95/100 | ✅ Passed | Accurate action verb, concise, standard |
+| `task.button.assign` → *Asignar* | ~92/100 | ✅ Passed | Correct, natural, consistent |
 
 ---
 
 ## ⚙️ Local Installation & Setup
 
-### 1. Clone Repository & Setup Virtual Environment
+### Prerequisites
+- Python 3.11+
+- An [Anthropic API key](https://console.anthropic.com/)
+
+### 1. Clone & Set Up Environment
 ```bash
-git clone https://github.com/your-username/ai-translation-quality-pipeline.git
+git clone https://github.com/LVVignesh/ai-translation-quality-pipeline.git
 cd ai-translation-quality-pipeline
 
-# Create virtual environment (Python 3.11+)
+# Create virtual environment
 python -m venv venv
 
-# Activate environment (Windows PowerShell)
+# Activate (Windows PowerShell)
 .\venv\Scripts\Activate.ps1
 
-# Activate environment (Linux/macOS)
+# Activate (Linux/macOS)
 source venv/bin/activate
 ```
 
@@ -212,47 +195,77 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env`:
+### 3. Configure API Key
 ```bash
-# Windows PowerShell
+# Windows
 Copy-Item .env.example .env
 
 # Linux/macOS
 cp .env.example .env
 ```
-Edit `.env` and set your API key:
+
+Edit `.env`:
 ```env
-ANTHROPIC_API_KEY=your_anthropic_api_key
+ANTHROPIC_API_KEY=sk-ant-your-key-here
 MODEL_NAME=claude-sonnet-4-6
 REQUEST_TIMEOUT=30.0
 MAX_RETRIES=3
 LOG_LEVEL=INFO
 ```
 
-### 4. Launch Application
+### 4. Launch
 ```bash
 python app.py
 ```
-Open your browser at `http://127.0.0.1:7860`.
+Open `http://127.0.0.1:7860` in your browser.
 
 ---
 
-## 🚀 Hugging Face Spaces Deployment Guide
+## ☁️ Hugging Face Spaces Deployment
 
-1. Log into [Hugging Face](https://huggingface.co/) and create a **New Space**.
-2. Select **Gradio** as the SDK and Python **3.11**.
-3. Upload all repository files (`app.py`, `claude_client.py`, `translator.py`, `scorer.py`, `prompts.py`, `schemas.py`, `sample_data.py`, `config.py`, `logger.py`, `utils.py`, `requirements.txt`, `README.md`, `.gitignore`).
-4. **Configure Space Secret**:
-   - Navigate to **Space Settings ➔ Variables and secrets ➔ New secret**
-   - Key: `ANTHROPIC_API_KEY`
-   - Value: `your_anthropic_api_key`
-5. Save secret and deploy. Hugging Face Spaces will automatically build and launch `app.py`.
+The app is deployed at: [https://huggingface.co/spaces/lvvignesh2122/ai-translation-quality-pipeline](https://huggingface.co/spaces/lvvignesh2122/ai-translation-quality-pipeline)
+
+### To deploy your own fork:
+
+1. Fork this repository to your GitHub account.
+2. Create a new [Hugging Face Space](https://huggingface.co/new-space) with:
+   - **SDK**: Gradio
+   - **Python**: 3.11
+3. Connect your GitHub repo **or** push directly:
+   ```bash
+   git remote add hf https://huggingface.co/spaces/YOUR_USERNAME/YOUR_SPACE_NAME
+   git push hf main
+   ```
+4. Add your API key as a **Space Secret**:
+   - Space → **Settings** → **Variables and secrets** → **New secret**
+   - Key: `ANTHROPIC_API_KEY` | Value: `sk-ant-your-key`
+5. The space builds and deploys automatically.
+
+> **Note**: The app also accepts an API key entered directly in the UI input field, so end users can bring their own key without configuring secrets.
+
+---
+
+## 🎯 Design Decisions
+
+| Decision | Rationale |
+|:---|:---|
+| **Gradio** | Python-native UI perfectly tailored for HF Spaces without web framework overhead |
+| **Pydantic v2** | Strict runtime validation and schema contracts for all LLM JSON payloads |
+| **Dedicated Claude Client** | Decouples API connectivity, retries, and JSON parsing from business services (SOLID) |
+| **Temperature = 0.0** | Eliminates variance; ensures reproducible translations and consistent rubric audits |
+| **Retry + Backoff** | Automatically recovers from transient timeouts and rate limits without user-visible crashes |
+| **Separated UI / Business Logic** | `app.py` is orchestration-only; services are independently testable |
 
 ---
 
 ## ⚠️ Known Limitations
 
-- **API Key Requirement**: Requires a valid Anthropic API key (`claude-sonnet-4-6`).
-- **Sequential Processing**: Processes batch items sequentially to respect default rate limits.
-- **Language Scope**: Target locale is currently optimized for English-to-Spanish UI localization.
+- Requires a valid Anthropic API key (`claude-sonnet-4-6` access)
+- Processes batch items sequentially to respect default API rate limits
+- Currently optimized for English → Spanish UI localization only
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE) for details.

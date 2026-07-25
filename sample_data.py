@@ -1,7 +1,7 @@
-"""Sample benchmark datasets for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Sample benchmark datasets for the AI Translation & Quality Scoring Pipeline.
 
-Includes the exact 10 context-ambiguous translation strings and 8 candidate evaluation pairs
-specified in the Voxiis interview assessment requirements.
+Includes 10 context-ambiguous English UI strings for translation and 8 candidate
+translation pairs for quality evaluation against the 100-point rubric.
 """
 
 from typing import List

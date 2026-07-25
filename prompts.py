@@ -1,4 +1,4 @@
-"""Prompt engineering templates for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Prompt engineering templates for the AI Translation & Quality Scoring Pipeline.
 
 Provides highly optimized, structured prompts for Anthropic Claude API to ensure
 context-aware UI string localization and objective 100-point rubric quality scoring.

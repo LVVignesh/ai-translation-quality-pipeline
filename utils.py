@@ -1,4 +1,4 @@
-"""Utility helpers for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Utility helpers for the AI Translation & Quality Scoring Pipeline.
 
 Provides functions for converting Pydantic internal models to Pandas DataFrames for Gradio
 table visualization, as well as file export utilities (CSV and JSON).
@@ -90,7 +90,7 @@ def quality_outputs_to_dataframe(results: List[QualityEvaluationOutput]) -> pd.D
     return pd.DataFrame(records)
 
 
-def export_dataframe_to_csv(df: pd.DataFrame, prefix: str = "voxiis_export") -> str:
+def export_dataframe_to_csv(df: pd.DataFrame, prefix: str = "ai_export") -> str:
     """Export a Pandas DataFrame to a temporary CSV file and return its file path.
 
     Args:
@@ -108,7 +108,7 @@ def export_dataframe_to_csv(df: pd.DataFrame, prefix: str = "voxiis_export") -> 
     return temp_file.name
 
 
-def export_models_to_json(models: Sequence[BaseModel], prefix: str = "voxiis_export") -> str:
+def export_models_to_json(models: Sequence[BaseModel], prefix: str = "ai_export") -> str:
     """Export a sequence of Pydantic models to a formatted JSON temporary file.
 
     Args:

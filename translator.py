@@ -1,4 +1,4 @@
-"""Translation pipeline service for Voxiis.
+"""Translation pipeline service for the AI Translation & Quality Scoring Pipeline.
 
 Handles context-aware software localization by orchestrating prompt templates,
 invoking the dedicated Claude client, and validating output with Pydantic schemas.

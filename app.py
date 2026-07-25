@@ -1,8 +1,7 @@
-"""Gradio application interface for Voxiis AI Translation & Quality Scoring Pipeline.
+"""Gradio application interface for the AI-Assisted Translation & Quality Scoring Pipeline.
 
 Orchestrates UI interactions, handles state transitions, and invokes translation/scoring services.
-Contains NO business logic, adhering to clean architecture principles.
-"""
+Contains NO business logic, adhering to clean architecture principles."""
 
 from typing import Optional, Tuple
 import gradio as gr
@@ -182,42 +181,42 @@ def export_translation_csv() -> Optional[str]:
     """Generate CSV file download for translation table."""
     if cached_translation_df.empty:
         return None
-    return export_dataframe_to_csv(cached_translation_df, prefix="voxiis_translations")
+    return export_dataframe_to_csv(cached_translation_df, prefix="ai_translations")
 
 
 def export_translation_json() -> Optional[str]:
     """Generate JSON file download for translation results."""
     if not cached_translation_results:
         return None
-    return export_models_to_json(cached_translation_results, prefix="voxiis_translations")
+    return export_models_to_json(cached_translation_results, prefix="ai_translations")
 
 
 def export_quality_csv() -> Optional[str]:
     """Generate CSV file download for quality scoring table."""
     if cached_quality_df.empty:
         return None
-    return export_dataframe_to_csv(cached_quality_df, prefix="voxiis_quality_evaluations")
+    return export_dataframe_to_csv(cached_quality_df, prefix="ai_quality_evaluations")
 
 
 def export_quality_json() -> Optional[str]:
     """Generate JSON file download for quality scoring results."""
     if not cached_quality_results:
         return None
-    return export_models_to_json(cached_quality_results, prefix="voxiis_quality_evaluations")
+    return export_models_to_json(cached_quality_results, prefix="ai_quality_evaluations")
 
 
 def create_app() -> gr.Blocks:
     """Build and configure the Gradio application layout."""
-    theme = gr.themes.Default()
+    theme = gr.themes.Soft()
 
-    with gr.Blocks(theme=theme, title="Voxiis – AI Localization & Quality Scoring") as app:
+    with gr.Blocks(theme=theme, title="AI Translation & Quality Scoring Pipeline") as app:
 
         gr.Markdown(
             """
-            # Voxiis – AI-Assisted Translation & Quality Scoring Pipeline
-            **Production AI Engineering Assessment Application**
-            
-            This application demonstrates context-aware software localization and objective, explainable 100-point translation quality scoring powered by Claude.
+            # 🌐 AI-Assisted Translation & Quality Scoring Pipeline
+            **Enterprise-grade context-aware software localization powered by Claude AI**
+
+            Translate ambiguous English UI strings into context-aware Spanish. Evaluate existing translations against a structured 100-point quality rubric. Export results as CSV or JSON.
             """
         )
 
