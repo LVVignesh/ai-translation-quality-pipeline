@@ -20,7 +20,6 @@ pinned: false
 
 An enterprise-grade AI software localization and translation quality evaluation system. This project demonstrates how Large Language Models perform context-aware software internationalization (i18n) and objective, explainable translation quality auditing through a clean reviewer-friendly Gradio interface.
 
-> *This project was developed as an AI Engineer technical assessment demonstrating production engineering practices.*
 
 ---
 
@@ -35,10 +34,17 @@ An enterprise-grade AI software localization and translation quality evaluation 
 
 ## 📸 Application Preview
 
-| Translation Pipeline | Quality Scoring Audit |
-|:---:|:---:|
-| ![Translation Tab — Context-aware English-to-Spanish UI string localization with confidence ratings](translation.png) | ![Quality Scoring Tab — 100-point rubric audit with severity ratings and suggested corrections](quality.png) |
+### 🖥️ Dashboard
 
+![Dashboard](screenshots/dashboard.png)
+
+### 🌍 Context-Aware Translation
+
+![Translation Pipeline](screenshots/translation.png)
+
+### 📊 Quality Scoring Audit
+
+![Quality Scoring](screenshots/quality.png)
 ---
 
 ## 📌 Project Overview
